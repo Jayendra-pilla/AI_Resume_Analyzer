@@ -1,20 +1,18 @@
 import random
-import smtplib
-from email.mime.text import MIMEText
+import resend
 from db import get_connection
 
 import pdfplumber
 import docx
 from sklearn.feature_extraction.text import CountVectorizer
 
-
-# ================= EMAIL SETTINGS =================
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
-sender_email = os.getenv("EMAIL_USER")
-sender_password = os.getenv("EMAIL_PASS")
+
+# ================= RESEND SETTINGS =================
+resend.api_key = os.getenv("RESEND_API_KEY")
 
 # ================= OTP =================
 def generate_otp():
@@ -22,15 +20,15 @@ def generate_otp():
 
 
 def send_otp(email, otp):
-
-    msg = MIMEText(f"Your OTP is: {otp}")
-    msg["Subject"] = "Resume Analyzer OTP"
-    msg["From"] = sender_email
-    msg["To"] = email
-
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(sender_email, sender_password)
-        server.send_message(msg)
+    resend.Emails.send({
+        "from": "onboarding@resend.dev",
+        "to": email,
+        "subject": "Resume Analyzer OTP",
+        "html": f"""
+        <h2>Your OTP is: {otp}</h2>
+        <p>This OTP will expire in 5 minutes.</p>
+        """
+    })
 
 
 # ================= USER FUNCTIONS =================
