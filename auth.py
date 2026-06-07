@@ -3,7 +3,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 from db import get_connection
-
+import streamlit as st
 import pdfplumber
 import docx
 from sklearn.feature_extraction.text import CountVectorizer
@@ -15,8 +15,8 @@ def generate_otp():
     return str(random.randint(100000, 999999))
 # ================= EMAIL OTP =================
 def send_otp(email, otp):
-    sender_email = os.getenv("EMAIL_USER")
-    sender_password = os.getenv("EMAIL_PASS")
+    sender_email = st.secrets["EMAIL_USER"]
+    sender_password = st.secrets["EMAIL_PASS"]
 
     msg = MIMEText(
         f"""
@@ -40,7 +40,11 @@ Resume Analyzer Team
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.starttls()
         server.login(sender_email, sender_password)
-        server.send_message(msg)
+        server.sendmail(
+            sender_email,
+            email,
+            msg.as_string()
+        )
 
 # ================= USER FUNCTIONS =================
 def user_exists(email):
