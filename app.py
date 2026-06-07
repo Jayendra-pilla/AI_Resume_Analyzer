@@ -299,9 +299,9 @@ def page_login():
                     st.success("Account created successfully ✅. Please login.")
                 else:
                     st.error("Invalid OTP")
-                    
+
         st.markdown("</div>", unsafe_allow_html=True)
-        
+
     st.markdown("<br><br><br>", unsafe_allow_html=True)
     
     # Feature Highlights (Below Login)
