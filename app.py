@@ -283,18 +283,34 @@ def page_login():
             reg_password = st.text_input("🔒 Password", type="password", placeholder="••••••••", key="reg_pass")
             
             if st.button("Send Access OTP"):
-                if user_exists(reg_email):
+                reg_email = reg_email.strip()
+
+                if not reg_email:
+                    st.error("Email is required")
+
+                elif "@" not in reg_email or "." not in reg_email:
+                    st.error("Please enter a valid email address")
+
+                elif user_exists(reg_email):
                     st.error("User already exists")
+
                 else:
                     otp = generate_otp()
                     send_otp(reg_email, otp)
+
                     st.session_state.otp = otp
                     st.session_state.otp_email = reg_email
+
                     st.success("OTP sent to your email!")
-                    
+
             otp_input = st.text_input("Enter OTP")
+
             if st.button("Verify & Register"):
-                if otp_input and otp_input == st.session_state.otp and reg_email == st.session_state.otp_email:
+                if (
+                    otp_input
+                    and otp_input == st.session_state.otp
+                    and reg_email == st.session_state.otp_email
+                ):
                     save_user(reg_name, reg_email, reg_password)
                     st.success("Account created successfully ✅. Please login.")
                 else:
