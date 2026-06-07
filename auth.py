@@ -10,13 +10,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from dotenv import load_dotenv
 import os
 load_dotenv()
-print("EMAIL_USER =", os.getenv("EMAIL_USER"))
-print("EMAIL_PASS =", os.getenv("EMAIL_PASS"))
 # ================= OTP =================
 def generate_otp():
     return str(random.randint(100000, 999999))
-
-
 # ================= EMAIL OTP =================
 def send_otp(email, otp):
     sender_email = os.getenv("EMAIL_USER")
