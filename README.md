@@ -79,7 +79,7 @@ An AI-powered Resume Analyzer that helps job seekers evaluate resumes, improve A
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```text
 AI_Resume_Analyzer/
@@ -87,24 +87,21 @@ AI_Resume_Analyzer/
 ├── app.py
 ├── auth.py
 ├── db.py
+├── job_matcher.py
+├── resume_comparator.py
 ├── requirements.txt
 ├── README.md
-├── .env
-│
 ├── uploads/
 ├── resumes/
 └── assets/
 ```
-
----
 
 ## ⚙️ Installation
 
 ### Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/AI_Resume_Analyzer.git
-cd AI_Resume_Analyzer
+git clone https://github.com/Jayendra-pilla/AI_Resume_Analyzer.git
 ```
 
 ### Create Virtual Environment
